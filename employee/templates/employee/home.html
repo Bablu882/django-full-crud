@@ -1,0 +1,51 @@
+{% extends 'employee/base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMPLOYEE INFORMATION</title>
+    <style>
+        body {
+            background-image:url('https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80') ;
+        }
+    </style>
+</head>
+<body>    <div class="jumbotron" style="background-color:papayawhip" "background-size: 50%;">
+    <div class="container for-about">
+        <h1>This Is Employee Home</h1>
+    </div>
+</div>
+    
+    
+    
+    <div class="jumbotron" style="background-color:tomato" "background-size: 50%;">
+        <div class="container for-about">
+            <h1> Register   Login  Logout</h1>
+        </div>
+    </div>
+    <button type="button" class="btn btn-light btn-lg"><a href="{% url 'register' %}">Register</a></button>
+    <button type="button" class="btn btn-warning btn-lg"><a href="{% url 'login'%}">Login</a></button>
+    <button type="button" class="btn btn-info btn-lg"><a href="{% url 'logout'%}">Logout</a></button>
+
+    <div class="jumbotron" style="background-color:orange" "background-size: 50%;">
+        <div class="container for-about">
+            <h1>User Apper While Login:-{{request.user}}</h1>
+        </div>
+    </div>
+
+    <table border="4" bgcolor='pink'>
+        <tr class="bg-info">
+            <td><h3>Add Employee</h3></td>
+            <td><h3><a href="{% url 'add' %}">Click Here</a></h3></td>
+        </tr>
+            <td><h3>Show ALL Employee</h3></td>
+        
+            <td><h3><a href="{% url 'show' %}">Click Here</a></h3></td>
+        </tr>
+    </table>
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,68 @@
+<!-- {% extends "employee/base.html" %}  -->
+<!-- {% block content %}  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOW ALL</title>
+    <style>
+    
+    </style>
+</head>
+<body bgcolor="01DFD7">
+    <div class="jumbotron" style="background-color:red" "background-size: 100%;">
+        <div class="container for-about">
+            <h1>#.......About Emloyee.......#</h1>
+            <h1>Information</h1>
+        </div>
+     </div>
+   
+    <button type="button" class="btn btn-dark btn-lg"><a href="{% url 'index'%}">Home</a></button> 
+    <h1>SHOW ALL EMPLOYEES OF THE COMPANY</h1>
+    <form action="post">
+     {% csrf_token %}
+     <table border="4" bgcolor="pink">
+        <tr><th>Id</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Mobile_no</th>
+            <th>Company</th>
+            <th>Role</th>
+            <th>Image</th>
+            <th>Created_date</th>
+            <th>Last_updated_date</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        <tr>
+        {% for item in data %}
+            
+            <td>{{item.id}}</td>
+            <td>{{item.Name}}</td>
+            <td>{{item.Address}}</td>
+            <td>{{item.Mobile_no}}</td>
+            <td>{{item.Company}}</td>
+            <td>{{item.Role}}</td>
+            {% if item.Image %}
+            <td><img src="{{item.Image.url}}" style="height:100px;width:100px;"></td>
+            {% endif %}
+            <td>{{item.Created_date}}</td>
+            <td>{{item.Last_updated_date}}</td>
+            <td>
+                <!-- <a href="{% url 'edit' item.id %}"><i class="far fa-edit fa-lg"> -->
+                    
+                
+                 <a href="/employee/edit/{{item.id}}"><span class="glyphicon glyphicon-pencil">Edit</span></a>
+            </td>
+            <td>
+                <a href="/employee/delete/{{item.id}}">Delete</a>
+            </td>
+        </tr>
+     {% endfor %} 
+         </table> 
+</form>
+</body>
+</html>
+ <!-- {% endblock content %} -->

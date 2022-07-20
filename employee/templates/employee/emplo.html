@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <style>
+       .contain{
+           width:100
+       }
+   </style>
+</head>
+<body>
+    
+<button type="button" class="btn btn-dark btn-lg"><a href="{% url 'index'%}">Home</a></button>
+
+
+<form method="POST" enctype="multipart/form-data" class="contain">
+{% csrf_token %}
+ <table bgcolor='yellow'>
+{{employ}}
+</table>
+<input type="submit" value="Add employee">
+ <button type="submit" calss="btn btn-success" bgcolor='red'><i class="fas fa-database"></i>submit</button>
+
+</form>
+ 
+</body>
+</html>
+
+
+
+
+
+
