@@ -16,7 +16,11 @@ urlpatterns = [
     path('logout/',view_logout,name='logout'),
     path('index/',view_index,name='index'),
     path('home2/',view_home2,name='home2'),
-    path('demo/',view_demo,name='demo')
+    path('demo/',view_demo,name='demo'),
+    path('login2',login2,name='login2'),
+    path('register2',register_attemp,name='register2'),
+    path('send-mail',sendmail,name='send-mail'),
+    path('success',success,name='success'),
 
 
 ]

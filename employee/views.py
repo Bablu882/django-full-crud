@@ -1,4 +1,8 @@
 #from typing_extensions import Required
+
+import profile
+import uuid
+from django.conf import settings
 from django.forms import *
 from django.http.response import HttpResponse
 from django.shortcuts import render,redirect
@@ -11,6 +15,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User,Group
 from .decorator import authenticate_user
+import uuid
+from django.contrib import messages
+
+
 # Create your views here.
 @login_required(login_url='login')
 def view_employee(request):
@@ -141,7 +149,81 @@ def view_home2(request):
     resp=render(request,'employee/home2.html')    
     return resp
 
+def sendmail(request):
+    return render(request,'employee/sent_mail.html')
+
+def success(request):
+    return render(request,'employee/success.html')    
+
+def login2(request):
+    return render(request,'employee/signup2.html')
+
+def register2(request):
+    return render(request,'employee/register2.html')    
 
 def view_demo(request):
     resp=render(request,'employee/demo.html')    
     return resp    
+
+def register_attemp(request):
+    if request.method=='POST':
+        username=request.POST.get('username')
+        email=request.POST.get('email')
+        password=request.POST.get('password')
+        print(password)
+
+        try:
+            if User.objects.filter(username=username).first():
+                messages.success(request,'username is taken ')
+                return redirect('/employee/register2')
+
+            if User.objects.filter(email=email).first():
+                messages.success(request,'email is taken ')
+                return redirect('/employee/register2')    
+            user_obj=User(username=username ,email=email)
+            user_obj.set_password(password)
+            user_obj.save()
+            auth_token=str(uuid.uuid4())
+            profile_obj=Profile.objects.create(user=user_obj,auth_token=auth_token)
+            profile_obj.save()
+            send_mail(email,auth_token)
+            return redirect('/send-mail')
+        except Exception as e:
+            print(e)    
+    return render(request,'employee/register2.html')
+
+
+
+
+
+def verify_token(request):
+    try:
+        profile_obj=Profile.objects.filter(auth_token=auth_token).first()                
+        if profile_obj:
+            if profile_obj.is_verified:
+                messages.success(request,'your account is already verified')
+                return redirect('/login')
+            profile_obj.is_verified=True  
+            profile_obj.save()
+            messages.success(request,'your account is already verified')
+            return redirect('/login')
+        else:
+            return redirect('/error')
+    except Exception as e:
+        print(e)   
+
+
+
+def send_mail(request):
+    subject="your account is verified "        
+    messages=f'hi past the link to erified account http://127.0.0.1:8000/verify/{token}'
+    email_from= settings.EMAIL_HOST_USER
+    recipient_list=[email]
+    send_mail(subject,messages,email_from,recipient_list)
+
+
+
+
+
+
+            
